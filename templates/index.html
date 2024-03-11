@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <title>CONSUME DRUGS PREDICTION</title>
+    <style>
+        body{            
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            height: 110vh;
+            font-family: 'Arial', sans-serif;
+            color: #111111;
+            margin: 0;
+            display: flex;		            
+            justify-content: center;
+        }
+
+        h1, h2, h3 {
+           
+           color: #0054a6;
+           
+        }        		
+		
+
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 2000px;
+            width: 100%;
+        }
+
+        label {
+            font-family: 'Arial', sans-serif;
+            color: #000000;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #0054a6;
+            color: white;
+            padding: 15px 20px;
+            margin: 15px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #111111;
+        }
+
+        #results {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+
+      
+        .input-group {
+            width: 33%; /* Set width of each group to take 1/3 of the form-container */
+            padding: 50px; /* Add some padding inside each group */
+            box-sizing: border-box; /* Include padding in the width calculation */
+        }
+
+        @media (max-width: 20000px) {
+            .input-group {
+                width: 90%; /* On smaller screens, make each group full width */
+                padding: 50px 0; /* Adjust padding for vertical stacking */
+            }
+            .input-container1 input[type="text"] {
+                min-width: 160px;
+            }
+
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-width: 200px;
+            margin-right:20px;
+   
+        }
+
+        .input-container1 {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            min-width: 200px;
+        }
+
+        .input-container select {
+             flex: 1;
+             margin-left: 10px;
+        }
+		
+		img {
+            width: 100%; /* Adjust the width as needed */
+            max-width: 700px; /* Set a maximum width if desired */
+            height: auto; /* Maintain the image's aspect ratio */
+        }
+    </style>
+</head>
+
+	
+<body>
+    <form id="predictForm">
+        <h1 style="text-align: center;"> CONSUME DRUGS PREDICTION ITERNATION 1 </h1>
+        <h2 style="text-align: center;">GROUP 3 - COMP313 SOFWARE  </h2>
+        <br><br>
+        <h3 style="text-align: center;">INPUT FEATURE VALUES</h3>
+
+        <div class="input-group">
+            <img src="{{ url_for('static', filename='drugs_consume.png') }}">
+        </div>
+
+        <!-- idependent Variable -->
+
+
+        <div class="input-group">
+
+            <div class="input-container">
+                <button id="submitBtn" type="submit">PREDICT</button>
+            </div>
+            <div id="results"></div>
+
+           
+        </div>
+
+    </form>
+
+    <div class="input-group">
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Age">AGE Group:</label>
+            </div>
+            <div class="input-container">
+                <select id="Age" name="Age" required>
+                    <option value="0">18 - 24 (0)</option>
+                    <option value="1">25 - 34 (1)</option>
+                    <option value="2">35 - 44 (2)</option>
+                    <option value="3">45 - 54 (3)</option>
+                    <option value="4">55 - 64 (4)</option>
+                    <option value="5">65+  (5)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Gender">Gender:</label>
+            </div>
+            <div class="input-container">
+                <select id="Gender" name="Gender" required>
+                    <option value="0">Male   (0)</option>
+                    <option value="1">Female (1)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Education">Education:</label>
+            </div>
+            <div class="input-container">
+                <select id="Education" name="Education" required>
+                    <option value="0">Left school before 16 years (0)</option>
+                    <option value="1">Left school at 16 years (1)</option>
+                    <option value="2">Left school at 17 years (2)</option>
+                    <option value="3">Left school at 18 years (3)</option>
+                    <option value="4">Some college or university, no certificate or degree(4)</option>
+                    <option value="5">Professional certificate/ diploma (5)</option>
+                    <option value="6">University degree (6)</option>
+                    <option value="7">Masters degree    (7)</option>
+                    <option value="8">Doctorate degree  (8)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Country">Country:</label>
+            </div>
+            <div class="input-container">
+                <select id="Country" name="Country" required>
+                    <option value="0">Australia   (0)</option>
+                    <option value="1">Canada      (1)</option>
+                    <option value="2">New Zealand (2)</option>
+                    <option value="3">Other       (3)</option>
+                    <option value="4">Republic of Ireland (4)</option>
+                    <option value="5">UK  (5)</option>
+                    <option value="6">USA (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Ethnicity">Ethnicity:</label>
+            </div>
+            <div class="input-container">
+                <select id="Ethnicity" name="Ethnicity" required>
+                    <option value="0">Asian             (0)</option>
+                    <option value="1">Black             (1)</option>
+                    <option value="2">Mixed-Black/Asian (2)</option>
+                    <option value="3">Mixed-White/Asian (3)</option>
+                    <option value="4">Mixed-White/Black (4)</option>
+                    <option value="5">Other  (5)</option>
+                    <option value="6">White  (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Nscore">Neuroticism:</label>
+            </div>
+            <div class="input-container1">
+                <input type="text" id="Nscore" name="Nscore" placeholder="Value [-3.46436 to 3.27393]" required>
+            </div>
+        </div>
+
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Escore">Extraversion:</label>
+            </div>
+            <div class="input-container1">
+                <input type="text" id="Escore" name="Escore" placeholder="Value [-3.27393 to 3.27393]" required>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Oscore">Openness to experience:</label>
+            </div>
+            <div class="input-container1">
+                <input type="text" id="Oscore" name="Oscore" placeholder="Value [-3.27393 to 2.90161]" required>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Ascore">Agreeableness:</label>
+            </div>
+            <div class="input-container1">
+                <input type="text" id="Ascore" name="Ascore" placeholder="Value [-3.46436 to 3.46436]" required>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Cscore">Conscientiousness:</label>
+            </div>
+            <div class="input-container1">
+                <input type="text" id="Cscore" name="Cscore" placeholder="Value [-3.46436 to 3.46436]" required>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Impulsive">Impulsiveness:</label>
+            </div>
+            <div class="input-container1">
+                <input type="text" id="Impulsive" name="Impulsive" placeholder="Value [-2.55524 to 2.90161]" required>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Sensation">Sensation:</label>
+            </div>
+            <div class="input-container1">
+                <input type="text" id="Sensation" name="Sensation" placeholder="Value [-2.07848 to 1.92173]" required>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="input-group">
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Alcohol">Alcohol:</label>
+            </div>
+            <div class="input-container">
+                <select id="Alcohol" name="Alcohol" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Amphet">Amphet:</label>
+            </div>
+            <div class="input-container">
+                <select id="Amphet" name="Amphet" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Amyl">Amyl:</label>
+            </div>
+            <div class="input-container">
+                <select id="Amyl" name="Amyl" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Benzos">Benzos:</label>
+            </div>
+            <div class="input-container">
+                <select id="Benzos" name="Benzos" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Caffeine">Caffeine:</label>
+            </div>
+            <div class="input-container">
+                <select id="Caffeine" name="Caffeine" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Cannabis">Cannabis:</label>
+            </div>
+            <div class="input-container">
+                <select id="Cannabis" name="Cannabis" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Chocolate">Chocolate:</label>
+            </div>
+            <div class="input-container">
+                <select id="Chocolate" name="Chocolate" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Coke">Coke:</label>
+            </div>
+            <div class="input-container">
+                <select id="Coke" name="Coke" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="input-group">
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Crack">Crack:</label>
+            </div>
+            <div class="input-container">
+                <select id="Crack" name="Crack" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Ecstasy">Ecstasy:</label>
+            </div>
+            <div class="input-container">
+                <select id="Ecstasy" name="Ecstasy" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Heroin">Heroin:</label>
+            </div>
+            <div class="input-container">
+                <select id="Heroin" name="Heroin" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Ketamine">Ketamine:</label>
+            </div>
+            <div class="input-container">
+                <select id="Ketamine" name="Ketamine" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Legalh">Legalh:</label>
+            </div>
+            <div class="input-container">
+                <select id="Legalh" name="Legalh" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="LSD">LSD:</label>
+            </div>
+            <div class="input-container">
+                <select id="LSD" name="LSD" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Meth">Meth:</label>
+            </div>
+            <div class="input-container">
+                <select id="Meth" name="Meth" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Mushrooms">Mushrooms:</label>
+            </div>
+            <div class="input-container">
+                <select id="Mushrooms" name="Mushrooms" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Nicotine">Nicotine:</label>
+            </div>
+            <div class="input-container">
+                <select id="Nicotine" name="Nicotine" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="Semer">Semer:</label>
+            </div>
+            <div class="input-container">
+                <select id="Semer" name="Semer" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <div class="input-container">
+                <label for="VSA">VSA:</label>
+            </div>
+            <div class="input-container">
+                <select id="VSA" name="VSA" required>
+                    <option value="0">Never Used              (0)</option>
+                    <option value="1">Used it over decade ago (1)</option>
+                    <option value="2">Used it in last decade  (2)</option>
+                    <option value="3">Used in the last year   (3)</option>
+                    <option value="4">Used in the last month  (4)</option>
+                    <option value="5">Used in the last week   (5)</option>
+                    <option value="6">Used in the last day    (6)</option>
+                </select>
+                <br><br>
+            </div>
+        </div>
+
+    </div>
+
+    <script>document.getElementById('submitBtn').addEventListener('click', function (e) {
+            e.preventDefault();
+
+            //var selectedModels = ["Deep Neural Network", "Random_Forest", "Gradient Boost","Logistic_Regression"];
+            var selectedModels = ["LR_Prediction", "RF_Prediction"];
+
+            // Create the data object to send in the request
+            var data = {
+                models: selectedModels,
+                Nscore: document.getElementById('Nscore').value,
+                Escore: document.getElementById('Escore').value,
+                Oscore: document.getElementById('Oscore').value,
+                Ascore: document.getElementById('Ascore').value,
+                Cscore: document.getElementById('Cscore').value,
+                Impulsive: document.getElementById('Impulsive').value,
+                Sensation: document.getElementById('Sensation').value,
+                Alcohol: document.getElementById('Alcohol').value,
+                Amphet: document.getElementById('Amphet').value,
+                Amyl: document.getElementById('Amyl').value,
+                Benzos: document.getElementById('Benzos').value,
+                Coke: document.getElementById('Coke').value,
+                Crack: document.getElementById('Crack').value,
+                Ecstasy: document.getElementById('Ecstasy').value,
+                Heroin: document.getElementById('Heroin').value,
+                Ketamine: document.getElementById('Ketamine').value,
+                Legalh: document.getElementById('Legalh').value,
+                LSD: document.getElementById('LSD').value,
+                Meth: document.getElementById('Meth').value,
+                Mushrooms: document.getElementById('Mushrooms').value,
+                Nicotine: document.getElementById('Nicotine').value,
+                VSA: document.getElementById('VSA').value
+            };
+            // Create an XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+            // Set the request method and URL
+            xhr.open('POST', 'http://127.0.0.1:12412/predict', true);
+            // Set the Content-Type
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    // Get the JSON response
+                    var response = JSON.parse(xhr.responseText);
+
+                    // Check if the prediction is defined in the response
+                    if (response.prediction1 !== undefined) {
+
+                        // Create a formatted string to display the results
+                        var resultsHTML = "<div style='font-family:Tahoma; color:#0054a6;'><h4>Results:</h4>";
+
+                        resultsHTML += "<p><strong> The probability to be Addict using Logistic Regresion is :</strong> " + response.prediction1 + "</p>";
+                        resultsHTML += "<p><strong> The probability to be Addict using Random Forrest     is :</strong> " + response.prediction2 + "</p>";
+                        resultsHTML += "</div>";
+                        // Print the results to the results div
+                        document.getElementById('results').innerHTML = resultsHTML;
+                    } else {
+                        // Handle the case when the prediction is not defined in the response
+                        document.getElementById('results').innerHTML = "<p style='color:red;'>Error: Prediction not available</p>";
+                    }
+                }
+            };
+            // Send the request with the JSON stringified data
+            xhr.send(JSON.stringify(data));
+        });</script>
+
+</body>
+
+</html>
