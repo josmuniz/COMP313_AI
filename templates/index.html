@@ -133,12 +133,23 @@
         <div class="input-group">
 
             <div class="input-container">
-                <button id="submitBtn" type="submit">PREDICT</button>
+                <button id="submitBtn1" type="submit">PREDICT RISK CONSUME</button>
             </div>
-            <div id="results"></div>
+            <div id="results1"></div>
 
            
         </div>
+
+        <div class="input-group">
+
+            <div class="input-container">
+                <button id="submitBtn2" type="submit">PREDICT RISK HEROIN CONSUME</button>
+            </div>
+            <div id="results2"></div>
+
+           
+        </div>
+
 
     </form>
 
@@ -652,11 +663,19 @@
 
     </div>
 
-    <script>document.getElementById('submitBtn').addEventListener('click', function (e) {
+    <script>
+    
+    		var predictionCount = 0;
+
+    		document.getElementById('submitBtn1').addEventListener('click', function (e) {
             e.preventDefault();
 
+			// Increment the prediction count
+    		predictionCount++;
+
+
             //var selectedModels = ["Deep Neural Network", "Random_Forest", "Gradient Boost","Logistic_Regression"];
-            var selectedModels = ["LR_Prediction", "RF_Prediction"];
+            var selectedModels = ["LR_Prediction", "RF_Prediction","Neural Network"];
 
             // Create the data object to send in the request
             var data = {
@@ -687,7 +706,7 @@
             // Create an XMLHttpRequest object
             var xhr = new XMLHttpRequest();
             // Set the request method and URL
-            xhr.open('POST', 'http://127.0.0.1:12412/predict', true);
+            xhr.open('POST', 'http://127.0.0.1:1200/predict', true);
             // Set the Content-Type
             xhr.setRequestHeader('Content-Type', 'application/json');
 
@@ -700,22 +719,104 @@
                     if (response.prediction1 !== undefined) {
 
                         // Create a formatted string to display the results
-                        var resultsHTML = "<div style='font-family:Tahoma; color:#0054a6;'><h4>Results:</h4>";
+                        //var resultsHTML = "<div style='font-family:Tahoma; color:#0054a6;'><h4>Results:</h4>";
+
+						var resultsHTML = "<div style='font-family:Tahoma; color:#0054a6;'><h4>Prediction " + predictionCount + " Results:</h4>";
 
                         resultsHTML += "<p><strong> The probability to be Addict using Logistic Regresion is :</strong> " + response.prediction1 + "</p>";
                         resultsHTML += "<p><strong> The probability to be Addict using Random Forrest     is :</strong> " + response.prediction2 + "</p>";
+                        resultsHTML += "<p><strong> The probability to be Addict using Deep Learning      is :</strong> " + response.prediction3 + "</p>";
                         resultsHTML += "</div>";
                         // Print the results to the results div
-                        document.getElementById('results').innerHTML = resultsHTML;
+                        document.getElementById('results1').innerHTML = resultsHTML;
                     } else {
                         // Handle the case when the prediction is not defined in the response
-                        document.getElementById('results').innerHTML = "<p style='color:red;'>Error: Prediction not available</p>";
+                        document.getElementById('results1').innerHTML = "<p style='color:red;'>Error: Prediction not available</p>";
                     }
                 }
             };
             // Send the request with the JSON stringified data
             xhr.send(JSON.stringify(data));
-        });</script>
+        }
+         );</script>
+     
+     
+     
+   <script>
+            document.getElementById('submitBtn2').addEventListener('click', function (e) {
+            e.preventDefault();
+
+			// Increment the prediction count
+    		predictionCount++;
+
+
+            //var selectedModels = ["Deep Neural Network", "Random_Forest", "Gradient Boost","Logistic_Regression"];
+            var selectedModels = ["LR_Prediction", "RF_Prediction","Neural Network"];
+            //var selectedModels = ["HEROIN"];
+
+            // Create the data object to send in the request
+            var data = {
+                models: selectedModels,
+                Nscore: document.getElementById('Nscore').value,
+                Escore: document.getElementById('Escore').value,
+                Oscore: document.getElementById('Oscore').value,
+                Ascore: document.getElementById('Ascore').value,
+                Cscore: document.getElementById('Cscore').value,
+                Impulsive: document.getElementById('Impulsive').value,
+                Sensation: document.getElementById('Sensation').value,
+                Alcohol: document.getElementById('Alcohol').value,
+                Amphet: document.getElementById('Amphet').value,
+                Amyl: document.getElementById('Amyl').value,
+                Benzos: document.getElementById('Benzos').value,
+                Coke: document.getElementById('Coke').value,
+                Crack: document.getElementById('Crack').value,
+                Ecstasy: document.getElementById('Ecstasy').value,
+                Heroin: document.getElementById('Heroin').value,
+                Ketamine: document.getElementById('Ketamine').value,
+                Legalh: document.getElementById('Legalh').value,
+                LSD: document.getElementById('LSD').value,
+                Meth: document.getElementById('Meth').value,
+                Mushrooms: document.getElementById('Mushrooms').value,
+                Nicotine: document.getElementById('Nicotine').value,
+                VSA: document.getElementById('VSA').value
+            };
+            // Create an XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+            // Set the request method and URL
+            xhr.open('POST', 'http://127.0.0.1:1200/predict', true);
+            // Set the Content-Type
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    // Get the JSON response
+                    var response = JSON.parse(xhr.responseText);
+
+                    // Check if the prediction is defined in the response
+                    if (response.prediction1 !== undefined) {
+
+                        // Create a formatted string to display the results
+                        //var resultsHTML = "<div style='font-family:Tahoma; color:#0054a6;'><h4>Results:</h4>";
+
+						var resultsHTML = "<div style='font-family:Tahoma; color:#0054a6;'><h4>Prediction " + predictionCount + " Results:</h4>";
+
+                        resultsHTML += "<p><strong> The probability to be Addict Heroin using Deep Learning is :</strong> " + response.prediction4 + "</p>";
+                        //resultsHTML += "<p><strong> The probability to be Addict using Random Forrest     is :</strong> " + response.prediction2 + "</p>";
+                        //#resultsHTML += "<p><strong> The probability to be Addict using Deep Learning      is :</strong> " + response.prediction3 + "</p>";
+                        resultsHTML += "</div>";
+                        // Print the results to the results div
+                        document.getElementById('results2').innerHTML = resultsHTML;
+                    } else {
+                        // Handle the case when the prediction is not defined in the response
+                        document.getElementById('results2').innerHTML = "<p style='color:red;'>Error: Prediction not available</p>";
+                    }
+                }
+            };
+            // Send the request with the JSON stringified data
+            xhr.send(JSON.stringify(data));
+        }
+    
+            );</script>
 
 </body>
 
